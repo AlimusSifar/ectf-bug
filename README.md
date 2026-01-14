@@ -1,21 +1,13 @@
-# eCTF
+# eCTF Tools
 
-[![image](https://img.shields.io/pypi/v/ectf.svg)](https://pypi.python.org/pypi/ectf)
-[![image](https://img.shields.io/pypi/l/ectf.svg)](https://pypi.python.org/pypi/ectf)
+## Setup
+[uv](https://docs.astral.sh/uv/) is required to run the tools
 
-The official tools for MITRE's [Embedded Capture the Flag](https://ectf.mitre.org)
-(eCTF) Competition.
+Once installed, you can run the eCTF tools with:
 
-## Use
-
-The tools require [uv](https://docs.astral.sh/uv/) to be run.
-
-The tools can be run with [uvx](https://docs.astral.sh/uv/guides/tools/) with:
 ```commandline
-uvx ectf --help
+uvx run ectf --help
 ```
 
-If you do not have the correct Python version installed, you can use uv's manager with:
-```commandline
-uv python install 3.13
-```
+See https://rules.ectf.mitre.org/2026/system/ectf_tools.html
+for full tool documentation

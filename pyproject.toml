@@ -1,14 +1,10 @@
 [project]
 name = "ectf"
-version = "0.1.2"
+version = "2026.0.0"
 description = "Tools for eCTF competitors"
 readme = "README.md"
-license = "Apache-2.0"
-license-files = [
-    "LICENSE.txt"
-]
 authors = [
-    { name = "Ben Janis", email = "ectf@mitre.org" }
+    { name = "Ben Janis", email = "btjanis@mitre.org" }
 ]
 requires-python = ">=3.12"
 dependencies = [
@@ -25,6 +21,17 @@ dependencies = [
 
 [project.scripts]
 ectf = "ectf.cli:app"
+update = "ectf.hw.fthr:update"
+unlock = "ectf.hw.fthr:unlock"
+bootinfo = "ectf.tools.utils.bootinfo:main"
+flash = "ectf.tools.utils.flash:main"
+list = "ectf.tools.hsm.list:main"
+read = "ectf.tools.hsm.read:main"
+write = "ectf.tools.hsm.write:main"
+listen = "ectf.tools.hsm.listen:main"
+interrogate = "ectf.tools.hsm.interrogate:main"
+receive = "ectf.tools.hsm.receive:main"
+pack = "ectf.tools.utils.pack:main"
 
 [build-system]
 requires = ["hatchling"]

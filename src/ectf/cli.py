@@ -10,15 +10,64 @@ own risk!
 Copyright: Copyright (c) 2025 The MITRE Corporation
 """
 
+import sys
 import webbrowser
 from typing import Annotated
 
 import typer
 
+import ectf.api.cli
+import ectf.hw.cli
+import ectf.tools.cli
 from ectf import CONFIG
-from ectf.console import info
+from ectf.api import API
+from ectf.console import error, info, success, warning
 
 app = typer.Typer(help="Interact with the eCTF hardware, design, and API")
+
+app.add_typer(ectf.tools.cli.app, name="tools", help="Run the host tools")
+app.add_typer(ectf.api.cli.app, name="api", help="Interact with the API")
+app.add_typer(ectf.hw.cli.app, name="hw", help="Interact with the MITRE bootloader")
+
+
+@app.command()
+def config(
+    token: Annotated[
+        str,
+        typer.Option(help="Team API token", prompt=True),
+    ] = API.config.token,
+    git_url: Annotated[
+        str,
+        typer.Option(help="API URL", prompt=True),
+    ] = API.config.git_url,
+    api_url: Annotated[
+        str,
+        typer.Option(help="API URL", prompt=True),
+    ] = API.config.api_url,
+    force: Annotated[bool, typer.Option("--force", "-f")] = False,  # noqa: FBT002
+) -> None:
+    """Create or update the configuration file"""
+    if API.config.exists():
+        if not force:
+            error(f"Config file {API.config.PATH} already exists! Use -f to overwrite")
+            sys.exit(-1)
+        else:
+            warning(f"Overwriting config file {API.config.PATH}")
+
+    API.config.token = token
+    API.config.git_url = git_url
+    API.config.api_url = api_url
+    API.config.dump()
+
+    success(f"Wrote config file to {API.config.PATH}")
+
+
+@app.command("docs")
+def docs() -> None:
+    """Open the API documentation website"""
+    url = f"{API.config.api_url}/docs"
+    info(f"Opening API interface website at {url}")
+    webbrowser.open_new_tab(url)
 
 
 @app.command("rules")
