@@ -198,7 +198,7 @@ def list_(pin: PINArgTy) -> None:
 @app.command()
 def interrogate(pin: PINArgTy) -> None:
     """Interrogate files stored on a connected HSM"""
-    hsm = CONFIG["HSM"]
+    hsm = HSMIntf.from_port(CONFIG["PORT"])
 
     try:
         file_list = hsm.interrogate(pin)
